@@ -10,6 +10,17 @@ services:
       MYSQL_DATABASE: mydatabase
     volumes:
       - mysql_data:/var/lib/mysql
+    networks:
+      - two-tier-nt
+    
+    healthcheck: 
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot"]
+      interval: 15s
+      timeout: 5s
+      retires: 5
+      startperiod: 60s
+
+
   flask_app:
     container_name: flask_app
     build: .
@@ -22,6 +33,18 @@ services:
       MYSQL_USER: root
       MYSQL_PASSWORD: pass
       MYSQL_DB: mydatabase
+    networks:
+      - two-tier-nt
+
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:5000/health || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retires: 5
+      startperiod: 60s
 
 volumes:
   mysql_data:
+
+networks:
+  two-tier-nt
