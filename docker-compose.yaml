@@ -36,10 +36,10 @@ services:
         condition: service_healthy
         
     environment:
-      MYSQL_HOST: db
-      MYSQL_USER: root
-      MYSQL_PASSWORD: pass
-      MYSQL_DB: mydatabase
+      - MYSQL_HOST=db
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=pass
+      - MYSQL_DB=mydatabase
       
     networks:
       - two-tier-nt
