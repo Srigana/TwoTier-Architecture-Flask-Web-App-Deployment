@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Srigana | Cloud Engineer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --border-color: #e2e8f0;
+            --text-dark: #1a202c;
+            --text-muted: #64748b;
+            --accent: #2563eb;
+            --bg-light: #f8fafc;
+        }
+
+        * {
+            margin: 0; padding: 0; box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            display: flex;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .wrapper {
+            max-width: 800px;
+            width: 100%;
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+        }
+
+        /* Top Header Section */
+        header {
+            padding: 40px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .profile-img {
+            width: 100px;
+            height: 100px;
+            border-radius: 12px;
+            object-fit: cover;
+            border: 2px solid var(--bg-light);
+        }
+
+        .title-area h1 {
+            font-size: 1.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        .title-area p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* Content Body */
+        .main-content {
+            padding: 40px;
+        }
+
+        .section-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 12px;
+            display: block;
+            font-weight: 700;
+        }
+
+        .bio {
+            font-size: 1.05rem;
+            margin-bottom: 30px;
+        }
+
+        /* Message Box Area */
+        .database-container {
+            background: #f1f5f9;
+            border-radius: 6px;
+            padding: 20px;
+        }
+
+        .message-list {
+            height: 180px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+        }
+
+        .entry {
+            padding: 6px 0;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            color: #334155;
+        }
+
+        .entry::before {
+            content: "> ";
+            color: var(--accent);
+        }
+
+        /* Simple Input Form */
+        .input-row {
+            display: flex;
+            gap: 10px;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-size: 0.9rem;
+            outline-color: var(--accent);
+        }
+
+        button {
+            background: var(--text-dark);
+            color: white;
+            border: none;
+            padding: 0 20px;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        button:hover {
+            background: var(--accent);
+        }
+
+        @media (max-width: 600px) {
+            header { flex-direction: column; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="wrapper">
+        <header>
+            <img src="1.png" alt="Srigana" class="profile-img">
+            <div class="title-area">
+                <h1>Srigana Pulikantham</h1>
+                <p>Cloud & DevOps Engineer • Graduate Student</p>
+            </div>
+        </header>
+
+        <div class="main-content">
+            <span class="section-label">System Overview</span>
+            <p class="bio">
+                Building robust 2-tier infrastructures using <b>Flask</b> and <b>MySQL</b>. 
+                Currently exploring automated CI/CD pipelines via Jenkins on AWS EC2.
+            </p>
+
+            <span class="section-label">Database Live Logs</span>
+            <div class="database-container">
+                <div class="message-list" id="logs">
+                    {% for message in messages %}
+                        <div class="entry">{{ message[0] }}</div>
+                    {% endfor %}
+                </div>
+
+                <form id="logForm" class="input-row">
+                    <input type="text" id="new_msg" placeholder="Append new record..." required>
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("#logForm").on("submit", function(e) {
+                e.preventDefault();
+                let val = $("#new_msg").val();
+                $.post("/submit", { new_message: val }, function(res) {
+                    $("#logs").append('<div class="entry">' + res.message + '</div>');
+                    $("#new_msg").val("");
+                    $("#logs").scrollTop($("#logs")[0].scrollHeight);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
