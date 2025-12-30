@@ -48,7 +48,7 @@ services:
       test: ["CMD-SHELL", "curl -f http://localhost:5000/health || exit 1"]
       interval: 15s
       timeout: 5s
-      retires: 5
+      retries: 5
       startperiod: 60s
 
 volumes:
