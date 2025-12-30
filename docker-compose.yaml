@@ -8,8 +8,12 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: pass
       MYSQL_DATABASE: mydatabase
+    ports:
+      - "3306:3306"
+      
     volumes:
       - mysql_data:/var/lib/mysql
+      
     networks:
       - two-tier-nt
     
@@ -18,21 +22,25 @@ services:
       interval: 15s
       timeout: 5s
       retires: 5
-      startperiod: 60s
+      start_period: 60s
 
 
   flask_app:
     container_name: flask_app
-    build: .
+    build: 
+      context: .
     ports:
       - "5000:5000"
     depends_on:
-      - db
+      db:
+        condition: service_healthy
+        
     environment:
       MYSQL_HOST: db
       MYSQL_USER: root
       MYSQL_PASSWORD: pass
       MYSQL_DB: mydatabase
+      
     networks:
       - two-tier-nt
 
