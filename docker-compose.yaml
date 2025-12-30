@@ -3,11 +3,11 @@ version: '3.8'
 services:
   db:
     container_name: mysql_db
-    image: mysql:8.0
+    image: mysql
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: pass
-      MYSQL_DATABASE: mydatabase
+      MYSQL_ROOT_PASSWORD: "pass"
+      MYSQL_DATABASE: "mydatabase"
     ports:
       - "3306:3306"
       
