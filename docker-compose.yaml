@@ -18,7 +18,7 @@ services:
       - two-tier-nt
     
     healthcheck: 
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot"]
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-ppass"]
       interval: 15s
       timeout: 5s
       retries: 5
