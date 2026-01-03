@@ -40,6 +40,10 @@ def submit():
     cur.close()
     return jsonify({'message': new_message})
 
+@app.route('/image.png')
+def serve_image():
+    return send_from_directory('templates', '1.png')
+
 if __name__ == '__main__':
     init_db()
     app.run(host='0.0.0.0', port=5000, debug=True)
