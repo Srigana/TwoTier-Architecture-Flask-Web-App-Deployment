@@ -98,27 +98,28 @@ The application is containerized to ensure consistency across environments.
 * **Exposed Port:** `5000`
 
 **Docker Compose Configuration**
+
 The `docker-compose.yaml` orchestrates the two tiers:
-**1.** **flask-app:** The web server.
-**2.** **db:** The MySQL database.
+1. **flask-app:** The web server.
+2. **db:** The MySQL database.
 
 **Key Features:**
 * **Networking:** Both services run on a custom bridge network `two-tier-nt`.
 * **Persistence:** MySQL data is persisted using the `mysql_data` volume.
 * **Healthchecks:** Configured for both services to ensure dependency reliability.
-*** Environment Variables:** Database credentials passed securely via environment config.
+* **Environment Variables:** Database credentials passed securely via environment config.
 
 ## 🚀 CI/CD Pipeline (Jenkins)
 A `Jenkinsfile` is used to define the deployment pipeline.
-**1. Access Jenkins:** Open browser at `http://<EC2-Public-IP>:8080`.
-**2. Setup Job:** Created a new Pipeline job.
-**3. SCM:** Configured Git with the repository URL and credentials.
-**4. Branch:** Targeted `main` branch.
+1. **Access Jenkins:** Open browser at `http://<EC2-Public-IP>:8080`.
+2. **Setup Job:** Created a new Pipeline job.
+3. **SCM:** Configured Git with the repository URL and credentials.
+4. **Branch:** Targeted `main` branch.
 
 **Pipeline Stages:**
-**1. Clone:** Pulls the latest code from GitHub.
-**2. Build:** Builds the Docker image using the Dockerfile.
-**3. Deploy:** Uses docker-compose up -d to launch the containers.
+1. **Clone:** Pulls the latest code from GitHub.
+2. **Build:** Builds the Docker image using the Dockerfile.
+3. **Deploy:** Uses docker-compose up -d to launch the containers.
 
 ## 🌐 Accessing the Application
 Once the Jenkins pipeline completes successfully:
