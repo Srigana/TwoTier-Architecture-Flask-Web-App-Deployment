@@ -67,6 +67,12 @@ def submit():
     return jsonify({"message": msg})
 
 if __name__ == "__main__":
+    try:
+        mysql.connection.ping(False)
+    except:
+        pass
+    
     wait_for_db()
     init_db()
     app.run(host="0.0.0.0", port=5000)
+
