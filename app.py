@@ -15,14 +15,14 @@ mysql = MySQL(app)
 
 
 def wait_for_db(retries=10, delay=3):
-    """Wait for MySQL to become available before starting the app."""
     for i in range(retries):
         try:
             cur = mysql.connection.cursor()
             cur.execute("SELECT 1")
             cur.close()
             return
-        except Exception:
+        except Exception as e:
+            print(f"DB not ready ({i+1}/{retries}): {e}")
             time.sleep(delay)
     raise RuntimeError("MySQL not available")
 
